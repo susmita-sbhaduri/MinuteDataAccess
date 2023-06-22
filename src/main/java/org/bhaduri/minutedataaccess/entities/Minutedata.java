@@ -23,8 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "minutedata")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Minutedata.findAll", query = "SELECT m FROM Minutedata m")
-})
+    @NamedQuery(name = "Minutedata.findAll", query = "SELECT m FROM Minutedata m")})
 public class Minutedata implements Serializable {
 
     private static final long serialVersionUID = 1L;
