@@ -7,6 +7,7 @@
     <class>org.bhaduri.minutedataaccess.entities.Scrips</class>
     <class>org.bhaduri.minutedataaccess.entities.Calltable</class>
     <class>org.bhaduri.minutedataaccess.entities.Minutedata</class>
+    <class>org.bhaduri.minutedataaccess.DA.CallDataAccess</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/tarangdb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="bhadurianirban"/>
