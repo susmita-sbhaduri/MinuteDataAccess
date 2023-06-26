@@ -48,17 +48,19 @@ public class MasterDataServices {
                 recordData.add(row);
             }
             retCsvTickData.setTickData(recordData);
-            DateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            String strDate = targetFormat.format(minutedatas.get(minutedatas.size()-1).getMinutedataPK().getLastupdateminute());
+//            DateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+//            String strDate = targetFormat.format(minutedatas.get(minutedatas.size()-1).getMinutedataPK().getLastupdateminute());
 //            retCsvTickData.setDateTime(minutedatas.get(minutedatas.size()-1).getMinutedataPK().getLastupdateminute().toString());
-            retCsvTickData.setDateTime(strDate);
+//            retCsvTickData.setDateTime(strDate);
+            retCsvTickData.setDateTime(minutedatas.get(minutedatas.size() - 1).getMinutedataPK().getLastupdateminute());
             return retCsvTickData;
         } catch (Exception exception) {
             System.out.println(exception + " has occurred in getLastpricerPerScripID.");
             return null;
         }
     }
-     public CsvTickData getLatestDataScripID(String scripid, Date lastupdateDate) {
+
+    public CsvTickData getLatestDataScripID(String scripid, Date lastupdateDate) {
         MinuteDataAccess minuteDataAccess = new MinuteDataAccess(emf);
         CsvTickData retCsvTickData = new CsvTickData();
         List<List<Double>> recordData = new ArrayList<>();
@@ -78,16 +80,17 @@ public class MasterDataServices {
             return null;
         }
     }
-     public void insertIntoCalltable(RecordCallPrice lastCallData) {
+
+    public void insertIntoCalltable(RecordCallPrice lastCallData) {
         CallDataAccess caltableDA = new CallDataAccess(emf);
         try {
             CalltablePK calltablePK = new CalltablePK();
             Calltable callDataRecord = new Calltable();
-            
+
             calltablePK.setScripid(lastCallData.getScripID());
-            DateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-            Date lastupdateDate = targetFormat.parse(lastCallData.getLastUpdateTime());
-            calltablePK.setLastupdateminute(lastupdateDate);
+//            DateFormat targetFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+//            Date lastupdateDate = targetFormat.parse(lastCallData.getLastUpdateTime());
+            calltablePK.setLastupdateminute(lastCallData.getLastUpdateTime());
 
             callDataRecord.setCalltablePK(calltablePK);
             callDataRecord.setPrice(lastCallData.getPrice());
@@ -100,11 +103,38 @@ public class MasterDataServices {
 //            return HedwigResponseCode.SUCCESS;
         } catch (PreexistingEntityException preexistingEntityException) {
             System.out.println("data exists" + lastCallData.getScripID() + lastCallData.getLastUpdateTime());
-        } catch (ParseException ex) {
-            System.out.println("data parsing problem" + lastCallData.getLastUpdateTime());
-        }
+        } //        catch (ParseException ex) {
+        //            System.out.println("data parsing problem" + lastCallData.getLastUpdateTime());
+        //        }
         catch (Exception exception) {
             System.out.println(exception + " has occurred in saveSripData.");
+        }
+    }
+
+    public List<RecordCallPrice> readSortCallList() {
+        CallDataAccess caltableDA = new CallDataAccess(emf);
+        try {
+            List<Calltable> calldata = caltableDA.calllistSorted();
+            List<RecordCallPrice> recordList = new ArrayList<>();
+            RecordCallPrice record = new RecordCallPrice();
+            
+            for (int i = 0; i < calldata.size(); i++) {
+                record.setScripID(calldata.get(i).getCalltablePK().getScripid());
+                record.setLastUpdateTime(calldata.get(i).getCalltablePK().getLastupdateminute());
+                record.setPrice(calldata.get(i).getPrice());
+                record.setLastCallVersionOne(calldata.get(i).getCallone());
+                record.setLastCallVersionTwo(calldata.get(i).getCalltwo());
+                record.setRetraceVersionOne(calldata.get(i).getRetraceone());
+                record.setRetraceVersionTwo(calldata.get(i).getRetracetwo());
+                
+                recordList.add(record);
+                record = new RecordCallPrice();
+            }
+            return recordList;
+        } 
+        catch (Exception exception) {
+            System.out.println(exception + " has occurred in readSortCallList.");
+            return null;
         }
     }
 }

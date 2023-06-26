@@ -5,5 +5,8 @@
     </named-query> 
     <named-query name="Minutedata.listByScripidLastupdate">
         <query>SELECT m FROM Minutedata m WHERE m.minutedataPK.scripid = :scripid and m.minutedataPK.lastupdateminute > :lastupdatedate</query>
-    </named-query> 
+    </named-query>
+    <named-query name="Calltable.calllistSorted">
+        <query>SELECT c FROM Calltable c ORDER BY c.calltablePK.scripid, c.calltablePK.lastupdateminute</query>
+    </named-query>
 </entity-mappings>
