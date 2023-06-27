@@ -20,7 +20,9 @@ import org.bhaduri.minutedataaccess.entities.Calltable;
 import org.bhaduri.minutedataaccess.entities.CalltablePK;
 import org.bhaduri.datatransfer.DTO.CsvTickData;
 import org.bhaduri.datatransfer.DTO.RecordCallPrice;
+import org.bhaduri.minutedataaccess.DA.ScripIdAccess;
 import org.bhaduri.minutedataaccess.JPA.exceptions.PreexistingEntityException;
+import org.bhaduri.minutedataaccess.entities.Scrips;
 
 /**
  *
@@ -134,6 +136,22 @@ public class MasterDataServices {
         } 
         catch (Exception exception) {
             System.out.println(exception + " has occurred in readSortCallList.");
+            return null;
+        }
+    }
+    
+    public List<String> readScripData() {
+        ScripIdAccess scripDA = new ScripIdAccess(emf);
+        try {
+            List<Scrips> scripIDs = scripDA.listAllScripid();
+            List<String> scripIDStr = new ArrayList<>();
+            for (int i = 0; i < scripIDs.size(); i++) {
+                scripIDStr.add(scripIDs.get(i).getScripid());
+            }            
+            return scripIDStr;
+        } 
+        catch (Exception exception) {
+            System.out.println(exception + " has occurred in readScripData.");
             return null;
         }
     }

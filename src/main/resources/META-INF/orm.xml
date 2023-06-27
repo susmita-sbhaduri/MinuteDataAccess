@@ -9,4 +9,7 @@
     <named-query name="Calltable.calllistSorted">
         <query>SELECT c FROM Calltable c ORDER BY c.calltablePK.scripid, c.calltablePK.lastupdateminute</query>
     </named-query>
+    <named-query name="Scrips.listAllScripid">
+        <query>SELECT s FROM Scrips s</query>
+    </named-query>
 </entity-mappings>

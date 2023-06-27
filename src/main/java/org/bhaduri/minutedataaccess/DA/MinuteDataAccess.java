@@ -11,7 +11,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 import org.bhaduri.minutedataaccess.JPA.MinutedataJpaController;
 import org.bhaduri.minutedataaccess.entities.Minutedata;
-import static org.bhaduri.minutedataaccess.entities.MinutedataPK_.lastupdateminute;
 
 /**
  *
