@@ -140,6 +140,60 @@ public class MasterDataServices {
         }
     }
     
+    public List<RecordCallPrice> callListPerScrip(String scripid) {
+        CallDataAccess caltableDA = new CallDataAccess(emf);
+        try {
+            List<Calltable> calldata = caltableDA.callPerScripid(scripid);
+            List<RecordCallPrice> recordList = new ArrayList<>();
+            RecordCallPrice record = new RecordCallPrice();
+            
+            for (int i = 0; i < calldata.size(); i++) {
+                record.setScripID(calldata.get(i).getCalltablePK().getScripid());
+                record.setLastUpdateTime(calldata.get(i).getCalltablePK().getLastupdateminute());
+                record.setPrice(calldata.get(i).getPrice());
+                record.setLastCallVersionOne(calldata.get(i).getCallone());
+                record.setLastCallVersionTwo(calldata.get(i).getCalltwo());
+                record.setRetraceVersionOne(calldata.get(i).getRetraceone());
+                record.setRetraceVersionTwo(calldata.get(i).getRetracetwo());
+                
+                recordList.add(record);
+                record = new RecordCallPrice();
+            }
+            return recordList;
+        } 
+        catch (Exception exception) {
+            System.out.println(exception + " has occurred in readSortCallList.");
+            return null;
+        }
+    }
+    
+     public List<RecordCallPrice> listReverseCalls(String scripid, Date lastupdateDate, String callString) {
+        CallDataAccess caltableDA = new CallDataAccess(emf);
+        try {
+            List<Calltable> calldata = caltableDA.getReverseCalls(scripid, lastupdateDate, callString);
+            List<RecordCallPrice> recordList = new ArrayList<>();
+            RecordCallPrice record = new RecordCallPrice();
+            
+            for (int i = 0; i < calldata.size(); i++) {
+                record.setScripID(calldata.get(i).getCalltablePK().getScripid());
+                record.setLastUpdateTime(calldata.get(i).getCalltablePK().getLastupdateminute());
+                record.setPrice(calldata.get(i).getPrice());
+                record.setLastCallVersionOne(calldata.get(i).getCallone());
+                record.setLastCallVersionTwo(calldata.get(i).getCalltwo());
+                record.setRetraceVersionOne(calldata.get(i).getRetraceone());
+                record.setRetraceVersionTwo(calldata.get(i).getRetracetwo());
+                
+                recordList.add(record);
+                record = new RecordCallPrice();
+            }
+            return recordList;
+        } 
+        catch (Exception exception) {
+            System.out.println(exception + " has occurred in readSortCallList.");
+            return null;
+        }
+    }
+    
     public List<String> readScripData() {
         ScripIdAccess scripDA = new ScripIdAccess(emf);
         try {

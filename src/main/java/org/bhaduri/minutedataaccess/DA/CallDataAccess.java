@@ -33,4 +33,22 @@ public class CallDataAccess extends CalltableJpaController{
         return listofscripdata;
     }
     
+    public List<Calltable> callPerScripid(String scripid) {
+        EntityManager em = getEntityManager();
+        TypedQuery<Calltable> query = em.createNamedQuery("Calltable.callPerScripid", Calltable.class);
+        query.setParameter("scripid", scripid);
+        List<Calltable> listofscripdata = query.getResultList();
+        return listofscripdata;
+    }
+    
+    public List<Calltable> getReverseCalls(String scripid, Date lastupdateDate, String callString) {
+        EntityManager em = getEntityManager();
+        TypedQuery<Calltable> query = em.createNamedQuery("Calltable.getReverseCalls", Calltable.class);
+        query.setParameter("scripid", scripid); 
+        query.setParameter("lastupdatedate", lastupdateDate);
+        query.setParameter("calltwo", callString);
+        List<Calltable> listofscripdata = query.getResultList();
+        return listofscripdata;
+    }
+    
 }

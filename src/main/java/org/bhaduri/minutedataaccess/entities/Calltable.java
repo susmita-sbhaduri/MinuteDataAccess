@@ -22,7 +22,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "calltable")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Calltable.findAll", query = "SELECT c FROM Calltable c"),
+    @NamedQuery(name = "Calltable.findAll", query = "SELECT c FROM Calltable c")
 })
 public class Calltable implements Serializable {
 
