@@ -20,6 +20,7 @@ import org.bhaduri.minutedataaccess.entities.Calltable;
 import org.bhaduri.minutedataaccess.entities.CalltablePK;
 import org.bhaduri.datatransfer.DTO.CsvTickData;
 import org.bhaduri.datatransfer.DTO.RecordCallPrice;
+import org.bhaduri.datatransfer.DTO.RecordMinute;
 import org.bhaduri.minutedataaccess.DA.ScripIdAccess;
 import org.bhaduri.minutedataaccess.JPA.exceptions.PreexistingEntityException;
 import org.bhaduri.minutedataaccess.entities.Scrips;
@@ -79,6 +80,31 @@ public class MasterDataServices {
             return retCsvTickData;
         } catch (Exception exception) {
             System.out.println(exception + " has occurred in getLastpricerPerScripID.");
+            return null;
+        }
+    }
+    
+    public List<RecordMinute> getMindataForRange(String scripid, Date lastupdateStart, Date lastupdateEnd) {
+        MinuteDataAccess minuteDataAccess = new MinuteDataAccess(emf);
+        List<RecordMinute> recordList = new ArrayList<>();
+        RecordMinute record = new RecordMinute();
+        try {
+            List<Minutedata> minutedatas = minuteDataAccess.validCallsForScript(scripid, lastupdateStart, lastupdateEnd);
+            for (int i = 0; i < minutedatas.size(); i++) {
+                record.setScripID(minutedatas.get(i).getMinutedataPK().getScripid());
+                record.setLastUpdateTime(minutedatas.get(i).getMinutedataPK().getLastupdateminute());
+                record.setOpenprice(minutedatas.get(i).getOpenprice());
+                record.setDaylastprice(minutedatas.get(i).getDaylastprice());
+                record.setDayhighprice(minutedatas.get(i).getDayhighprice());
+                record.setDaylowprice(minutedatas.get(i).getDaylowprice());
+                record.setPrevcloseprice(minutedatas.get(i).getPrevcloseprice());
+                record.setTotaltradedvolume(minutedatas.get(i).getTotaltradedvolume());
+                recordList.add(record);
+                record = new RecordMinute();
+            }            
+            return recordList;
+        } catch (Exception exception) {
+            System.out.println(exception + " has occurred in getMindataForRange.");
             return null;
         }
     }

@@ -38,5 +38,15 @@ public class MinuteDataAccess extends MinutedataJpaController{
         List<Minutedata> listofscripdata = query.getResultList();
         return listofscripdata;
     }
+    
+    public List<Minutedata> validCallsForScript(String scripid, Date lastupdateStart, Date lastupdateEnd) {
+        EntityManager em = getEntityManager();
+        TypedQuery<Minutedata> query = em.createNamedQuery("Minutedata.validCallsForScript", Minutedata.class);
+        query.setParameter("scripid", scripid); 
+        query.setParameter("lastupdstart", lastupdateStart);
+        query.setParameter("lastupdend", lastupdateEnd);
+        List<Minutedata> listofpricedata = query.getResultList();
+        return listofpricedata;
+    }
    
 }
