@@ -108,7 +108,32 @@ public class MasterDataServices {
             return null;
         }
     }
-
+    
+    public List<RecordMinute> getAllMindata() {
+        MinuteDataAccess minuteDataAccess = new MinuteDataAccess(emf);
+        List<RecordMinute> recordList = new ArrayList<>();
+        RecordMinute record = new RecordMinute();
+        try {
+            List<Minutedata> minutedatas = minuteDataAccess.listMinData();
+            for (int i = 0; i < minutedatas.size(); i++) {
+                record.setScripID(minutedatas.get(i).getMinutedataPK().getScripid());
+                record.setLastUpdateTime(minutedatas.get(i).getMinutedataPK().getLastupdateminute());
+                record.setOpenprice(minutedatas.get(i).getOpenprice());
+                record.setDaylastprice(minutedatas.get(i).getDaylastprice());
+                record.setDayhighprice(minutedatas.get(i).getDayhighprice());
+                record.setDaylowprice(minutedatas.get(i).getDaylowprice());
+                record.setPrevcloseprice(minutedatas.get(i).getPrevcloseprice());
+                record.setTotaltradedvolume(minutedatas.get(i).getTotaltradedvolume());
+                recordList.add(record);
+                record = new RecordMinute();
+            }            
+            return recordList;
+        } catch (Exception exception) {
+            System.out.println(exception + " has occurred in getMindataForRange.");
+            return null;
+        }
+    }
+    
     public void insertIntoCalltable(RecordCallPrice lastCallData) {
         CallDataAccess caltableDA = new CallDataAccess(emf);
         try {
