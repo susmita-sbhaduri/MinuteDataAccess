@@ -22,12 +22,12 @@ public class MinuteDataAccess extends MinutedataJpaController{
         super(emf);
     }
     
-    public List<Minutedata> listMinData() {
-        EntityManager em = getEntityManager();
-        TypedQuery<Minutedata> query = em.createNamedQuery("Minutedata.listMinData", Minutedata.class);
-        List<Minutedata> listofscripdata = query.getResultList();
-        return listofscripdata;
-    }
+//    public List<Minutedata> listMinData() {
+//        EntityManager em = getEntityManager();
+//        TypedQuery<Minutedata> query = em.createNamedQuery("Minutedata.listMinData", Minutedata.class);
+//        List<Minutedata> listofscripdata = query.getResultList();
+//        return listofscripdata;
+//    }
     
     public List<Minutedata> listByScripid(String scripid) {
         EntityManager em = getEntityManager();
